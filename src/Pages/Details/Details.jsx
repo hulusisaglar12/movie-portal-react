@@ -9,7 +9,9 @@ function Details() {
   const [movie, setMovie] = useState(null);
   const [cast, setCast] = useState([]);
 
-  // Bug fix: id added to dependency array so data reloads if the route id changes
+  // ASSIGNMENT 4 — BUG FIX: Original code had empty dependency array [].
+  // This meant the movie data never reloaded when navigating between movies.
+  // Fixed by adding id to the dependency array so it re-fetches when the route changes.
   useEffect(() => {
     loadMovie();
     loadCast();

@@ -1,3 +1,4 @@
+// ASSIGNMENT 4 — added useMemo and useCallback imports for performance optimization
 import { useEffect, useState, useMemo, useCallback } from "react";
 import {
   fetchTopRated,
@@ -41,6 +42,8 @@ function Home() {
     setGenres(data.genres);
   }
 
+  // ASSIGNMENT 4 — PERFORMANCE: useCallback gives all handlers stable references
+  // so child components do not re-render unnecessarily
   const handleSearch = useCallback((text) => {
     setQuery(text);
     setPage(1);
@@ -61,7 +64,8 @@ function Home() {
   const handlePrevPage = useCallback(() => setPage((p) => p - 1), []);
   const handleNextPage = useCallback(() => setPage((p) => p + 1), []);
 
-  // useMemo avoids re-filtering the movie list on every render
+  // ASSIGNMENT 4 — PERFORMANCE: useMemo avoids re-filtering the movie list on every render.
+  // Only recomputes when movies or selectedGenre actually changes.
   const filteredMovies = useMemo(
     () =>
       selectedGenre
@@ -80,14 +84,14 @@ function Home() {
         value={query}
         onChange={(e) => handleSearch(e.target.value)}
         className={styles.search}
-        aria-label="Search movies"
+        aria-label="Search movies" // ASSIGNMENT 4 — ACCESSIBILITY
       />
 
       <select
         value={selectedGenre}
         onChange={handleGenreChange}
         className={styles.dropdown}
-        aria-label="Filter by genre"
+        aria-label="Filter by genre" // ASSIGNMENT 4 — ACCESSIBILITY
       >
         <option value="">All Genres</option>
         {genres.map((g) => (
